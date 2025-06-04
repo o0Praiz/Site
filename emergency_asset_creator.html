@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Asset Creator - Quick Launch Images</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #2563eb;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .urgency {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+        
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .asset-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .asset-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+        }
+        
+        .asset-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .priority {
+            background: #ef4444;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        
+        .option {
+            background: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .option h4 {
+            margin: 0 0 10px 0;
+            color: #1e40af;
+        }
+        
+        .time-badge {
+            background: #10b981;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .link-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+            transition: transform 0.2s;
+        }
+        
+        .link-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .emergency-section {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        .emergency-section h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        
+        .checklist {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist h4 {
+            color: #0369a1;
+            margin-top: 0;
+        }
+        
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #bae6fd;
+        }
+        
+        .checklist li:before {
+            content: "⚡";
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ Emergency Asset Creator</h1>
+            <div class="urgency">🚨 LAUNCH BLOCKER SOLVER 🚨</div>
+            <p><strong>Goal:</strong> Get all essential images in 15 minutes to unblock your launch</p>
+        </div>
+
+        <div class="asset-grid">
+            <!-- Professional Headshot -->
+            <div class="asset-card">
+                <div class="asset-title">
+                    📸 Professional Headshot 
+                    <span class="priority">CRITICAL</span>
+                </div>
+                
+                <div class="option">
+                    <h4>📱 Smartphone Solution <span class="time-badge">5 min</span></h4>
+                    <p><strong>Setup:</strong> Stand near large window, clean background, use portrait mode</p>
+                    <p><strong>Tips:</strong> Take 20+ shots, pick best, crop to square</p>
+                    <a href="https://squoosh.app" class="link-button" target="_blank">Optimize with Squoosh</a>
+                </div>
+                
+                <div class="option">
+                    <h4>🤖 AI-Generated <span class="time-badge">3 min</span></h4>
+                    <p>Upload casual photo, generate professional headshot</p>
+                    <a href="https://www.profilepicture.ai" class="link-button" target="_blank">ProfilePicture.ai</a>
+                    <a href="https://photostudio.com" class="link-button" target="_blank">PhotoStudio</a>
+                </div>
+                
+                <div class="option">
+                    <h4>🎨 Create Avatar <span class="time-badge">2 min</span></h4>
+                    <p>Professional avatar if photo not available</p>
+                    <a href="https://avatar.vercel.app" class="link-button" target="_blank">Avatar Generator</a>
+                    <a href="https://personas.draftbit.com" class="link-button" target="_blank">Personas</a>
+                </div>
+            </div>
+
+            <!-- Project Screenshots -->
+            <div class="asset-card">
+                <div class="asset-title">
+                    🖥️ Project Screenshots 
+                    <span class="priority">HIGH</span>
+                </div>
+                
+                <div class="option">
+                    <h4>📊 Dashboard Mockups <span class="time-badge">10 min</span></h4>
+                    <p>Use Canva dashboard templates, customize for AI projects</p>
+                    <a href="https://canva.com/templates/search/dashboard" class="link-button" target="_blank">Canva Dashboards</a>
+                    <p><strong>Search terms:</strong> "analytics dashboard", "data visualization", "admin panel"</p>
+                </div>
+                
+                <div class="option">
+                    <h4>🎨 Figma Templates <span class="time-badge">8 min</span></h4>
+                    <p>Professional UI mockups, free account sufficient</p>
+                    <a href="https://figma.com" class="link-button" target="_blank">Figma Free</a>
+                    <p><strong>Community templates:</strong> Search "AI dashboard", "ML interface"</p>
+                </div>
+                
+                <div class="option">
+                    <h4>📱 Screenshot Real Apps <span class="time-badge">5 min</span></h4>
+                    <p>If you have access to any systems you've built</p>
+                    <p><strong>Anonymize:</strong> Blur sensitive data, focus on UI/UX</p>
+                </div>
+            </div>
+
+            <!-- Background Images -->
+            <div class="asset-card">
+                <div class="asset-title">
+                    🌟 Background & Hero Images 
+                    <span class="priority">MEDIUM</span>
+                </div>
+                
+                <div class="option">
+                    <h4>📷 Free Stock Photos <span class="time-badge">3 min</span></h4>
+                    <p>High-quality, no attribution required</p>
+                    <a href="https://unsplash.com/s/photos/artificial-intelligence" class="link-button" target="_blank">Unsplash AI</a>
+                    <a href="https://pexels.com/search/technology/" class="link-button" target="_blank">Pexels Tech</a>
+                </div>
+                
+                <div class="option">
+                    <h4>🎨 Generated Backgrounds <span class="time-badge">2 min</span></h4>
+                    <p>AI-generated abstract backgrounds</p>
+                    <a href="https://bgjar.com" class="link-button" target="_blank">BGJar Patterns</a>
+                    <a href="https://coolbackgrounds.io" class="link-button" target="_blank">Cool Backgrounds</a>
+                </div>
+            </div>
+
+            <!-- Emergency Placeholders -->
+            <div class="asset-card">
+                <div class="asset-title">
+                    🆘 Emergency Placeholders 
+                    <span class="priority">BACKUP</span>
+                </div>
+                
+                <div class="option">
+                    <h4>🎯 Launch Now, Improve Later <span class="time-badge">1 min</span></h4>
+                    <p>Use optimized placeholders, replace post-launch</p>
+                    <a href="https://placeholder.com/800x450/3b82f6/ffffff?text=AI+Project" class="link-button" target="_blank">Generate Placeholders</a>
+                </div>
+                
+                <div class="option">
+                    <h4>📐 Geometric Patterns <span class="time-badge">2 min</span></h4>
+                    <p>Professional-looking patterns for project cards</p>
+                    <a href="https://heropatterns.com" class="link-button" target="_blank">Hero Patterns</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="emergency-section">
+            <h3>🚨 ABSOLUTE EMERGENCY - Launch in 5 Minutes</h3>
+            <p><strong>If you need to launch RIGHT NOW:</strong></p>
+            <ol>
+                <li>Use your current best photo (even casual) → crop to square</li>
+                <li>Download 6 tech images from Unsplash with these searches:
+                    <ul>
+                        <li>"artificial intelligence dashboard"</li>
+                        <li>"machine learning interface"</li>
+                        <li>"data analytics screen"</li>
+                        <li>"computer vision demo"</li>
+                        <li>"chatbot interface"</li>
+                        <li>"predictive analytics"</li>
+                    </ul>
+                </li>
+                <li>Rename and place in correct folders</li>
+                <li>Deploy immediately - improve images later</li>
+            </ol>
+        </div>
+
+        <div class="checklist">
+            <h4>⚡ 15-Minute Asset Checklist</h4>
+            <ul>
+                <li>Professional headshot (512x512px) saved as `public/images/profile/headshot.jpg`</li>
+                <li>6 project images (800x450px) saved as `public/images/projects/project-1.jpg` etc.</li>
+                <li>Hero background (1920x1080px) saved as `public/images/backgrounds/hero-bg.jpg`</li>
+                <li>All images optimized to <100KB each using Squoosh.app</li>
+                <li>File names match exactly what's expected in your code</li>
+                <li>Images are web-optimized (JPG/WebP format)</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <h3 style="color: #2563eb;">🎯 Remember: Perfect is the Enemy of Launched!</h3>
+            <p style="font-size: 1.2em; color: #6b7280;">
+                Your technical foundation is <strong>exceptional</strong>. Don't let image perfection delay your launch.<br>
+                Launch with good-enough assets, then improve them iteratively.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

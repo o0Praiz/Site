@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch Progress Tracker - Jesse A. Hawkins AI Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .progress-container {
+            padding: 40px;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #10b981, #34d399);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 20px;
+        }
+
+        .phase {
+            margin-bottom: 30px;
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .phase.active {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+        }
+
+        .phase.completed {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .phase-header {
+            background: #f8fafc;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .phase.completed .phase-header {
+            background: #10b981;
+            color: white;
+        }
+
+        .phase.active .phase-header {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .phase-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .phase-status {
+            font-size: 1.5em;
+        }
+
+        .phase-content {
+            padding: 25px;
+            display: none;
+        }
+
+        .phase.active .phase-content {
+            display: block;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8fafc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .task:hover {
+            background: #f1f5f9;
+            transform: translateY(-1px);
+        }
+
+        .task.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .task.completed .task-checkbox {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .task.completed .task-checkbox::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+
+        .task-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .task-time {
+            font-size: 0.9em;
+            color: #6b7280;
+            background: #e5e7eb;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .timer {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #fef3c7, #fde047);
+            border-radius: 15px;
+            border: 2px solid #f59e0b;
+        }
+
+        .timer-text {
+            font-size: 1.1em;
+            color: #92400e;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .timer-value {
+            font-size: 3em;
+            font-weight: 700;
+            color: #d97706;
+            font-family: 'Courier New', monospace;
+        }
+
+        .celebration {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            margin-top: 30px;
+            border-radius: 15px;
+        }
+
+        .celebration.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .celebration h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .url-input {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f0f9ff;
+            border-radius: 12px;
+            border: 2px solid #0ea5e9;
+        }
+
+        .url-input input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .share-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .linkedin { background: #0077b5; }
+        .twitter { background: #1da1f2; }
+        .github { background: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Launch Progress Tracker</h1>
+            <div class="status" id="status">Ready to Launch Jesse's AI Portfolio</div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-text" id="progressText">0% Complete - Let's get started!</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="timer">
+                <div class="timer-text">Time since you started:</div>
+                <div class="timer-value" id="timer">00:00:00</div>
+            </div>
+
+            <!-- Phase 1: Environment Setup -->
+            <div class="phase active" data-phase="1">
+                <div class="phase-header" onclick="togglePhase(1)">
+                    <div class="phase-title">
+                        <span>⚙️</span>
+                        <span>Phase 1: Environment Setup</span>
+                    </div>
+                    <div class="phase-status">⏳</div>
+                </div>
+                <div class="phase-content">
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Create .env.local file with basic configuration</div>
+                        <div class="task-time">5 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Test production build (npm run build && npm run preview)</div>
+                        <div class="task-time">3 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Install Vercel CLI (npm install -g vercel)</div>
+                        <div class="task-time">2 min</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2: Content & Assets -->
+            <div class="phase" data-phase="2">
+                <div class="phase-header" onclick="togglePhase(2)">
+                    <div class="phase-title">
+                        <span>📸</span>
+                        <span>Phase 2: Content & Assets</span>
+                    </div>
+                    <div class="phase-status">⏳</div>
+                </div>
+                <div class="phase-content">
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Add professional headshot to public/images/profile/</div>
+                        <div class="task-time">10 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Add 6 project screenshots to public/images/projects/</div>
+                        <div class="task-time">15 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Update project data with real AI project content</div>
+                        <div class="task-time">10 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Optimize all images (<100KB each using squoosh.app)</div>
+                        <div class="task-time">5 min</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Deployment -->
+            <div class="phase" data-phase="3">
+                <div class="phase-header" onclick="togglePhase(3)">
+                    <div class="phase-title">
+                        <span>🚀</span>
+                        <span>Phase 3: Production Deployment</span>
+                    </div>
+                    <div class="phase-status">⏳</div>
+                </div>
+                <div class="phase-content">
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Deploy to Vercel (vercel --prod)</div>
+                        <div class="task-time">5 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Configure custom domain (jesseahawkins.com)</div>
+                        <div class="task-time">10 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Verify SSL certificate and HTTPS access</div>
+                        <div class="task-time">3 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Test all functionality on live site</div>
+                        <div class="task-time">5 min</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4: Launch Announcement -->
+            <div class="phase" data-phase="4">
+                <div class="phase-header" onclick="togglePhase(4)">
+                    <div class="phase-title">
+                        <span>📢</span>
+                        <span>Phase 4: Launch Announcement</span>
+                    </div>
+                    <div class="phase-status">⏳</div>
+                </div>
+                <div class="phase-content">
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Post LinkedIn launch announcement</div>
+                        <div class="task-time">5 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Update GitHub profile with portfolio link</div>
+                        <div class="task-time">3 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Post Twitter launch thread</div>
+                        <div class="task-time">5 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Update email signature with website link</div>
+                        <div class="task-time">2 min</div>
+                    </div>
+                    <div class="task" onclick="toggleTask(this)">
+                        <div class="task-checkbox"></div>
+                        <div class="task-text">Email 5 key professional contacts</div>
+                        <div class="task-time">10 min</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="url-input">
+                <label for="liveUrl"><strong>🌐 Your Live Website URL:</strong></label>
+                <input type="url" id="liveUrl" placeholder="https://jesseahawkins.com" onchange="updateShareLinks()">
+                <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">
+                    Enter your live URL here to update the share buttons below
+                </p>
+            </div>
+
+            <div class="celebration" id="celebration">
+                <h2>🎉 CONGRATULATIONS! 🎉</h2>
+                <p style="font-size: 1.3em; margin-bottom: 20px;">
+                    Your AI Portfolio is LIVE and ready to generate opportunities!
+                </p>
+                <p style="font-size: 1.1em;">
+                    You've successfully launched a professional AI portfolio that showcases real business impact. 
+                    This is a significant achievement that will accelerate your career and business opportunities.
+                </p>
+                
+                <div class="share-buttons">
+                    <a href="#" class="share-btn linkedin" id="shareLinkedIn" target="_blank">Share on LinkedIn</a>
+                    <a href="#" class="share-btn twitter" id="shareTwitter" target="_blank">Share on Twitter</a>
+                    <a href="#" class="share-btn github" id="shareGitHub" target="_blank">Update GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let startTime = Date.now();
+        let completedTasks = 0;
+        const totalTasks = document.querySelectorAll('.task').length;
+
+        // Timer
+        function updateTimer() {
+            const elapsed = Date.now() - startTime;
+            const hours = Math.floor(elapsed / 3600000);
+            const minutes = Math.floor((elapsed % 3600000) / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            
+            document.getElementById('timer').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        setInterval(updateTimer, 1000);
+
+        function toggleTask(taskElement) {
+            taskElement.classList.toggle('completed');
+            updateProgress();
+            
+            // Check if phase is complete
+            const phase = taskElement.closest('.phase');
+            const phaseTasks = phase.querySelectorAll('.task');
+            const phaseCompletedTasks = phase.querySelectorAll('.task.completed');
+            
+            if (phaseTasks.length === phaseCompletedTasks.length) {
+                completePhase(phase);
+            }
+        }
+
+        function completePhase(phaseElement) {
+            phaseElement.classList.remove('active');
+            phaseElement.classList.add('completed');
+            phaseElement.querySelector('.phase-status').textContent = '✅';
+            
+            // Activate next phase
+            const phaseNumber = parseInt(phaseElement.dataset.phase);
+            const nextPhase = document.querySelector(`[data-phase="${phaseNumber + 1}"]`);
+            if (nextPhase) {
+                nextPhase.classList.add('active');
+            }
+        }
+
+        function updateProgress() {
+            completedTasks = document.querySelectorAll('.task.completed').length;
+            const progress = (completedTasks / totalTasks) * 100;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = 
+                `${Math.round(progress)}% Complete - ${completedTasks}/${totalTasks} tasks done`;
+            
+            if (progress === 100) {
+                document.getElementById('celebration').classList.add('show');
+                document.getElementById('status').textContent = 'LAUNCH COMPLETE! 🎉';
+                document.getElementById('progressText').textContent = '🚀 LAUNCH SUCCESSFUL! Your AI portfolio is live!';
+            }
+        }
+
+        function togglePhase(phaseNumber) {
+            const phase = document.querySelector(`[data-phase="${phaseNumber}"]`);
+            const content = phase.querySelector('.phase-content');
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function updateShareLinks() {
+            const url = document.getElementById('liveUrl').value || 'https://jesseahawkins.com';
+            
+            const linkedInText = encodeURIComponent('🚀 Excited to share my new AI engineering portfolio! Check out my latest projects with real business impact: ');
+            const twitterText = encodeURIComponent('🚀 Just launched my AI portfolio! Real projects, real impact: ');
+            
+            document.getElementById('shareLinkedIn').href = 
+                `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${linkedInText}`;
+            
+            document.getElementById('shareTwitter').href = 
+                `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(url)}`;
+                
+            document.getElementById('shareGitHub').href = 'https://github.com/settings/profile';
+        }
+
+        // Auto-expand first phase
+        document.querySelector('[data-phase="1"] .phase-content').style.display = 'block';
+        updateShareLinks();
+    </script>
+</body>
+</html>

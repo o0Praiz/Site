@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portfolio Image Creation Toolkit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .toolkit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 24px;
+        }
+        
+        .tool-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .tool-description {
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .mockup-generator {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .mockup-title {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .project-mockups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .mockup-preview {
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+        
+        .mockup-preview:hover {
+            border-color: #3182ce;
+        }
+        
+        .mockup-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .mockup-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .mockup-specs {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .resource-list {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .resource-title {
+            font-size: 1.8rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        
+        .resource-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+        
+        .resource-icon {
+            width: 40px;
+            height: 40px;
+            background: #3182ce;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+        }
+        
+        .resource-content {
+            flex: 1;
+        }
+        
+        .resource-name {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        
+        .resource-desc {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .quick-templates {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .template-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .template-card:hover {
+            border-color: #3182ce;
+            transform: translateY(-2px);
+        }
+        
+        .template-preview {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(45deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #a0aec0;
+        }
+        
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 AI Portfolio Image Creation Toolkit</h1>
+            <p>Professional visuals made simple - no design experience required</p>
+        </div>
+
+        <!-- Quick Action Tools -->
+        <div class="toolkit-grid">
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #3182ce;">📸</div>
+                    <div class="tool-title">Professional Headshot</div>
+                </div>
+                <div class="tool-description">
+                    Create a professional profile photo using your smartphone and natural lighting.
+                </div>
+                <a href="https://remove.bg" target="_blank" class="btn">Remove Background Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #805ad5;">🖥️</div>
+                    <div class="tool-title">Dashboard Mockups</div>
+                </div>
+                <div class="tool-description">
+                    Use Figma templates to create professional-looking AI dashboard screenshots.
+                </div>
+                <a href="https://figma.com" target="_blank" class="btn">Open Figma</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #38a169;">📊</div>
+                    <div class="tool-title">Data Visualizations</div>
+                </div>
+                <div class="tool-description">
+                    Create charts and graphs to showcase your AI project results and metrics.
+                </div>
+                <a href="https://canva.com" target="_blank" class="btn">Create Charts</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #ed8936;">⚡</div>
+                    <div class="tool-title">Quick Graphics</div>
+                </div>
+                <div class="tool-description">
+                    Generate social media headers, backgrounds, and promotional graphics instantly.
+                </div>
+                <a href="https://canva.com/create/linkedin-banner/" target="_blank" class="btn">Make Graphics</a>
+            </div>
+        </div>
+
+        <!-- Project Mockup Generator -->
+        <div class="mockup-generator">
+            <h2 class="mockup-title">📱 Project Screenshot Templates</h2>
+            <div class="project-mockups">
+                <div class="mockup-preview">
+                    <div class="mockup-image">📄</div>
+                    <div class="mockup-label">Document AI Dashboard</div>
+                    <div class="mockup-specs">800x450px • Processing interface with stats</div>
+                </div>
+
+                <div class="mockup-preview">
+                    <div class="mockup-image">🛡️</div>
+                    <div class="mockup-label">Fraud Detection System</div>
+                    <div class="mockup-specs">800x450px • Real-time monitoring dashboard</div>
+                </div>
+
+                <div class="mockup-preview">
+                    <div class="mockup-image">💬</div>
+                    <div class="mockup-label">AI Chatbot Interface</div>
+                    <div class="mockup-specs">800x450px • Conversation with metrics</div>
+                </div>
+
+                <div class="mockup-preview">
+                    <div class="mockup-image">⚙️</div>
+                    <div class="mockup-label">Predictive Maintenance</div>
+                    <div class="mockup-specs">800x450px • IoT sensor dashboard</div>
+                </div>
+
+                <div class="mockup-preview">
+                    <div class="mockup-image">👁️</div>
+                    <div class="mockup-label">Computer Vision QC</div>
+                    <div class="mockup-specs">800x450px • Quality inspection interface</div>
+                </div>
+
+                <div class="mockup-preview">
+                    <div class="mockup-image">🎯</div>
+                    <div class="mockup-label">Recommendation Engine</div>
+                    <div class="mockup-specs">800x450px • Personalized content interface</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="quick-templates">
+            <h3 class="resource-title">🎨 Brand Color Palette</h3>
+            <div class="color-palette">
+                <div class="color-swatch" style="background: #3B82F6;">#3B82F6</div>
+                <div class="color-swatch" style="background: #8B5CF6;">#8B5CF6</div>
+                <div class="color-swatch" style="background: #10B981;">#10B981</div>
+                <div class="color-swatch" style="background: #F59E0B;">#F59E0B</div>
+                <div class="color-swatch" style="background: #EF4444;">#EF4444</div>
+                <div class="color-swatch" style="background: #6B7280;">#6B7280</div>
+            </div>
+            <p style="text-align: center; color: #718096; margin-top: 10px;">
+                Use these colors consistently across all your visuals for professional branding
+            </p>
+        </div>
+
+        <!-- Quick Templates -->
+        <div class="quick-templates">
+            <h3 class="resource-title">⚡ 5-Minute Templates</h3>
+            <div class="template-grid">
+                <div class="template-card" onclick="window.open('https://www.figma.com/community/search?model_type=hub_files&q=dashboard', '_blank')">
+                    <div class="template-preview">📊</div>
+                    <div class="mockup-label">Dashboard Template</div>
+                    <div class="mockup-specs">Ready-to-customize Figma templates</div>
+                </div>
+
+                <div class="template-card" onclick="window.open('https://www.canva.com/create/linkedin-banner/', '_blank')">
+                    <div class="template-preview">📱</div>
+                    <div class="mockup-label">LinkedIn Banner</div>
+                    <div class="mockup-specs">Professional header with your info</div>
+                </div>
+
+                <div class="template-card" onclick="window.open('https://www.canva.com/create/infographic/', '_blank')">
+                    <div class="template-preview">📈</div>
+                    <div class="mockup-label">Results Infographic</div>
+                    <div class="mockup-specs">Showcase your project metrics</div>
+                </div>
+
+                <div class="template-card" onclick="window.open('https://excalidraw.com/', '_blank')">
+                    <div class="template-preview">🔧</div>
+                    <div class="mockup-label">Architecture Diagram</div>
+                    <div class="mockup-specs">System flow and components</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Free Resources -->
+        <div class="resource-list">
+            <h3 class="resource-title">🆓 Free Resources</h3>
+            
+            <div class="resource-item">
+                <div class="resource-icon">📸</div>
+                <div class="resource-content">
+                    <div class="resource-name">Unsplash</div>
+                    <div class="resource-desc">High-quality stock photos with AI/tech themes</div>
+                </div>
+                <a href="https://unsplash.com/s/photos/artificial-intelligence" target="_blank" class="btn">Browse</a>
+            </div>
+
+            <div class="resource-item">
+                <div class="resource-icon">🎨</div>
+                <div class="resource-content">
+                    <div class="resource-name">Figma Community</div>
+                    <div class="resource-desc">Free dashboard and UI templates</div>
+                </div>
+                <a href="https://www.figma.com/community" target="_blank" class="btn">Explore</a>
+            </div>
+
+            <div class="resource-item">
+                <div class="resource-icon">✂️</div>
+                <div class="resource-content">
+                    <div class="resource-name">Remove.bg</div>
+                    <div class="resource-desc">AI-powered background removal tool</div>
+                </div>
+                <a href="https://remove.bg" target="_blank" class="btn">Try It</a>
+            </div>
+
+            <div class="resource-item">
+                <div class="resource-icon">🗜️</div>
+                <div class="resource-content">
+                    <div class="resource-name">Squoosh</div>
+                    <div class="resource-desc">Image compression and format conversion</div>
+                </div>
+                <a href="https://squoosh.app" target="_blank" class="btn">Optimize</a>
+            </div>
+
+            <div class="resource-item">
+                <div class="resource-icon">🎭</div>
+                <div class="resource-content">
+                    <div class="resource-name">Canva</div>
+                    <div class="resource-desc">Quick graphics, social media headers, and charts</div>
+                </div>
+                <a href="https://canva.com" target="_blank" class="btn">Create</a>
+            </div>
+        </div>
+
+        <!-- Action Plan -->
+        <div class="quick-templates">
+            <h3 class="resource-title">⏰ 4-Hour Image Creation Plan</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="padding: 20px; background: #f7fafc; border-radius: 15px;">
+                    <h4 style="color: #2d3748; margin-bottom: 15px;">Hour 1: Profile Photo</h4>
+                    <ul style="color: #4a5568; line-height: 1.8;">
+                        <li>Take 10+ photos with smartphone</li>
+                        <li>Use natural window lighting</li>
+                        <li>Clean, professional background</li>
+                        <li>Remove background with remove.bg</li>
+                        <li>Resize to 512x512px</li>
+                    </ul>
+                </div>
+                
+                <div style="padding: 20px; background: #f7fafc; border-radius: 15px;">
+                    <h4 style="color: #2d3748; margin-bottom: 15px;">Hour 2-3: Project Screenshots</h4>
+                    <ul style="color: #4a5568; line-height: 1.8;">
+                        <li>Open Figma dashboard templates</li>
+                        <li>Customize 6 project mockups</li>
+                        <li>Add your branding colors</li>
+                        <li>Include realistic data/metrics</li>
+                        <li>Export as 800x450px PNG</li>
+                    </ul>
+                </div>
+                
+                <div style="padding: 20px; background: #f7fafc; border-radius: 15px;">
+                    <h4 style="color: #2d3748; margin-bottom: 15px;">Hour 4: Optimization</h4>
+                    <ul style="color: #4a5568; line-height: 1.8;">
+                        <li>Compress all images with Squoosh</li>
+                        <li>Create WebP versions</li>
+                        <li>Upload to project folders</li>
+                        <li>Update image paths in code</li>
+                        <li>Test on development server</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('mouseover', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseout', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Color palette click to copy
+        document.querySelectorAll('.color-swatch').forEach(swatch => {
+            swatch.addEventListener('click', function() {
+                const color = this.textContent;
+                navigator.clipboard.writeText(color).then(() => {
+                    this.textContent = '✓';
+                    setTimeout(() => {
+                        this.textContent = color;
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
